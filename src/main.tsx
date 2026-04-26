@@ -14,10 +14,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/LogIn" element={<LogIn />} /> {/* alias por si alguien usa la mayúscula */}
-        <Route path="*" element={<h1 style={{color:"#fff",textAlign:"center"}}>404 — Página no encontrada</h1>} />
+        <Route path="/" element={<LogIn />} />
       </Routes>
     </Router>
   </StrictMode>
