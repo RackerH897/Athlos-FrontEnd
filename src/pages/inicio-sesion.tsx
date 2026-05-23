@@ -136,7 +136,7 @@ const LoginPage = () => {
             <div className="text-center">
                 <p className="mb-0 text-muted" style={{ fontSize: "0.95rem" }}>
                     ¿No tienes una cuenta?{" "}
-                    <a href="#" className="text-decoration-underline fw-semibold" style={{ color: "#5FB0C2" }}>
+                    <a href="#" className="text-decoration-underline fw-semibold" style={{ color: "#5FB0C2" }} onClick={() => navigate("/RegistroUsuario")}>
                         Regístrate
                     </a>
                 </p>
