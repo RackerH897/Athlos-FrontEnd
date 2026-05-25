@@ -10,13 +10,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import LogIn from "./pages/inicio-sesion";
 import RegistroUsuario from "./pages/Registro-Usuario";
-
+import DatosUsuario from "./pages/Datos-Usuario"; 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<LogIn />} />
         <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
+        <Route path="/DatosUsuario" element={<DatosUsuario />} />
       </Routes>
     </Router>
   </StrictMode>
