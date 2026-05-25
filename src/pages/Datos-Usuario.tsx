@@ -62,6 +62,7 @@ const DatosUsuario = () => {
         // Generar identificador dinámico de datos físicos (ID_DATOS)
         const idGenerado = `DATOS-${Math.floor(1000 + Math.random() * 9000)}`;
         setIdDatosGenerado(idGenerado);
+        localStorage.setItem("athlos_datos", JSON.stringify({ peso, talla, edad, complexion, objetivo }));
         setGuardadoExitoso(true);
     };
 

@@ -68,6 +68,7 @@ const RegistroUsuario = () => {
 
         if (codigoIngresado === simularCodigo) {
             // Verificación exitosa, redirigir a Mis Datos Personales (US01)
+            localStorage.setItem("athlos_usuario", JSON.stringify({ nombre, correo }));
             navigate("/DatosUsuario");
         } else {
             setErrorVerificacion("Código incorrecto. Utilice el código simulado para la prueba.");

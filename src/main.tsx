@@ -12,6 +12,7 @@ import RegistroUsuario from "./pages/Registro-Usuario";
 import DatosUsuario from "./pages/Datos-Usuario"; 
 import EntornoEntrenamiento from "./pages/Entorno-Entrenamiento";
 import RecuperarContrasena from "./pages/recuperar-contrasena";
+import PerfilUsuario from "./pages/Perfil";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/DatosUsuario" element={<DatosUsuario />} />
         <Route path="/Entorno" element={<EntornoEntrenamiento />} />
         <Route path="/nueva-contraseña" element={<RecuperarContrasena />} />
+        <Route path="/Perfil" element={<PerfilUsuario />} />
 
       </Routes>
     </Router>

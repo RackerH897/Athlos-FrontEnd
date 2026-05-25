@@ -33,7 +33,8 @@ const EntornoEntrenamiento = () => {
         const payload = { ambiente: entorno };
         console.log("Entorno seleccionado:", payload);
         // Flujo simulado de fin de sprint 1: Redirigir al inicio o mostrar fin de flujo
-        navigate("/");
+        localStorage.setItem("athlos_entorno", JSON.stringify({ ambiente: entorno }));
+        navigate("/Perfil");
     };
 
     return (
