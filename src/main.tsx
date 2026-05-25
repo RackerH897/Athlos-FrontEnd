@@ -32,7 +32,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/Entorno" element={<EntornoEntrenamiento />} />
         <Route path="/nueva-contraseña" element={<RecuperarContrasena />} />
         <Route path="/Perfil" element={<PerfilUsuario />} />
-
+        
       </Routes>
     </Router>
   </StrictMode>
