@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
@@ -12,15 +11,25 @@ import LogIn from "./pages/inicio-sesion";
 import RegistroUsuario from "./pages/Registro-Usuario";
 import DatosUsuario from "./pages/Datos-Usuario"; 
 import EntornoEntrenamiento from "./pages/Entorno-Entrenamiento";
+import RecuperarContrasena from "./pages/recuperar-contrasena";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
+      {/* Elementos globales de fondo animado glassmorphic */}
+      <div className="bg-glow-container">
+        <div className="bg-glow-orb-1"></div>
+        <div className="bg-glow-orb-2"></div>
+        <div className="bg-glass-line-1"></div>
+        <div className="bg-glass-line-2"></div>
+      </div>
+
       <Routes>
         <Route path="/" element={<LogIn />} />
         <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
         <Route path="/DatosUsuario" element={<DatosUsuario />} />
         <Route path="/Entorno" element={<EntornoEntrenamiento />} />
+        <Route path="/nueva-contraseña" element={<RecuperarContrasena />} />
 
       </Routes>
     </Router>
