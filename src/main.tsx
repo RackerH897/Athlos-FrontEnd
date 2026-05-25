@@ -11,6 +11,8 @@ import "./style.css";
 import LogIn from "./pages/inicio-sesion";
 import RegistroUsuario from "./pages/Registro-Usuario";
 import DatosUsuario from "./pages/Datos-Usuario"; 
+import EntornoEntrenamiento from "./pages/Entorno-Entrenamiento";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
@@ -18,6 +20,8 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<LogIn />} />
         <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
         <Route path="/DatosUsuario" element={<DatosUsuario />} />
+        <Route path="/Entorno" element={<EntornoEntrenamiento />} />
+
       </Routes>
     </Router>
   </StrictMode>

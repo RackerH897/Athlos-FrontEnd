@@ -47,6 +47,7 @@ const DatosUsuario = () => {
         // TODO: conectar con el backend (POST /users/me/personal-data)
         console.log("Datos físicos:", payload);
         // navigate("/Home"); // <- descomenta cuando tengas la pantalla destino
+        navigate("/Entorno"); 
     };
 
     // estilos reutilizables para los inputs (igual que en tu registro)
@@ -185,7 +186,7 @@ const DatosUsuario = () => {
                     {/* Botón guardar */}
                     <div className="d-grid mb-2">
                         <button className="btn fw-semibold py-2" style={{ backgroundColor: "#FCD385", border: "none", color: "#412903", borderRadius: "8px" }} type="submit">
-                            Guardar datos
+                            Guardar datos / Continuar
                         </button>
                     </div>
                 </form>
