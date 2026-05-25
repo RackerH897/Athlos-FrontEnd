@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const URL_BACKEND = import.meta.env.VITE_URL_BACKEND || "http://localhost:3000"
+
 const LoginPage = () => {
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState<string>("");
@@ -141,7 +143,7 @@ const LoginPage = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" }}>
+                        <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" , color: "rgba(255, 255, 255, 0.6)" }}>
                             ¿No tiene una cuenta?{" "}
                             <a
                                 href="#"

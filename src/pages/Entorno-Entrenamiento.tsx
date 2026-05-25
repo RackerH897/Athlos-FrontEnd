@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 type Ambiente = "casa" | "gimnasio" | "aire_libre";
 
-
-
 const ENTORNOS: { value: Ambiente; label: string; icono: string }[] = [
     {
         value: "casa",
