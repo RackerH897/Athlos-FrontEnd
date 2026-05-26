@@ -420,9 +420,9 @@ const PerfilUsuario = () => {
           <div className="d-grid mt-2">
             <button
               className="btn glass-btn-primary py-2"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/Menu")}
             >
-              Volver / inicio sesion
+              Volver 
             </button>
           </div>
         )}
