@@ -24,9 +24,9 @@ const LoginPage = () => {
         }
 
         if (usuario === "usuario@gmail.com" && password === "123") {
-            navigate("/Perfil");
+            navigate("/Menu");
         } else if (usuario === "admin@gmail.com" && password === "123") {
-            navigate("/Perfil");
+            navigate("/Menu");
         } else {
             setError("Credenciales incorrectas. Pruebe con usuario@gmail.com y clave 123.");
         }
