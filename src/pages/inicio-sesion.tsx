@@ -41,36 +41,26 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center w-100 py-4">
-            <div className="text-center mb-4">
-                <div
-                    className="rounded-circle d-flex justify-content-center align-items-center mx-auto mb-3"
-                    style={{
-                        width: "64px",
-                        height: "64px",
-                        background: "rgba(116, 195, 210, 0.15)",
-                        border: "1px solid rgba(116, 195, 210, 0.3)"
-                    }}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style={{ width: "30px", fill: "#74C3D2" }}>
+        <div className="page-container">
+            <div className="page-header">
+                <div className="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                         <path d="M96 176C96 149.5 117.5 128 144 128C170.5 128 192 149.5 192 176L192 288L448 288L448 176C448 149.5 469.5 128 496 128C522.5 128 544 149.5 544 176L544 192L560 192C586.5 192 608 213.5 608 240L608 288C625.7 288 640 302.3 640 320C640 337.7 625.7 352 608 352L608 400C608 426.5 586.5 448 560 448L544 448L544 464C544 490.5 522.5 512 496 512C469.5 512 448 490.5 448 464L448 352L192 352L192 464C192 490.5 170.5 512 144 512C117.5 512 96 490.5 96 464L96 448L80 448C53.5 448 32 426.5 32 400L32 352C14.3 352 0 337.7 0 320C0 302.3 14.3 288 32 288L32 240C32 213.5 53.5 192 80 192L96 192L96 176z" />
                     </svg>
                 </div>
-                <h2 className="fw-bold" style={{ color: "#ffffff", letterSpacing: "-0.5px" }}>Athlos</h2>
-                <p style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "0.95rem" }}>
-                    Entrenador Personal con Inteligencia Artificial
-                </p>
+                <h2 className="fw-bold page-title">Athlos</h2>
+                <p className="page-subtitle">Entrenador Personal con Inteligencia Artificial</p>
             </div>
 
             <div className="glass-card">
-                <h4 className="fw-bold mb-1 text-start" style={{ color: "#ffffff" }}>Iniciar Sesión</h4>
-                <p className="text-start mb-4" style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.85rem" }}>
+                <h4 className="fw-bold mb-1 text-start card-title">Iniciar Sesión</h4>
+                <p className="text-start mb-4 card-subtitle">
                     Ingrese sus credenciales para acceder a su perfil de entrenamiento.
                 </p>
 
                 <form onSubmit={loginHandler}>
                     <div className="mb-3 text-start">
-                        <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
+                        <label className="form-label fw-semibold text-label">
                             Correo Electrónico
                         </label>
                         <div className="input-group">
@@ -92,15 +82,10 @@ const LoginPage = () => {
 
                     <div className="mb-3 text-start">
                         <div className="d-flex justify-content-between align-items-center mb-1">
-                            <label className="form-label fw-semibold mb-0" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
+                            <label className="form-label fw-semibold mb-0 text-label">
                                 Contraseña
                             </label>
-                            <a
-                                href="#"
-                                onClick={handleForgotPassword}
-                                style={{ color: "#74C3D2", fontSize: "0.8rem", textDecoration: "none" }}
-                                className="fw-semibold"
-                            >
+                            <a href="#" onClick={handleForgotPassword} className="link-teal" style={{ fontSize: "0.8rem" }}>
                                 Olvidé mi contraseña
                             </a>
                         </div>
@@ -122,16 +107,7 @@ const LoginPage = () => {
                     </div>
 
                     {error && (
-                        <div
-                            className="p-3 mb-3 rounded text-start"
-                            style={{
-                                background: "rgba(220, 53, 69, 0.15)",
-                                border: "1px solid rgba(220, 53, 69, 0.3)",
-                                color: "#ff8080",
-                                fontSize: "0.8rem",
-                                lineHeight: "1.4"
-                            }}
-                        >
+                        <div className="alert-glass-error mb-3 text-start">
                             {error}
                         </div>
                     )}
@@ -143,16 +119,12 @@ const LoginPage = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" , color: "rgba(255, 255, 255, 0.6)" }}>
+                        <p className="mb-0 text-muted-glass">
                             ¿No tiene una cuenta?{" "}
                             <a
                                 href="#"
-                                className="fw-semibold text-decoration-none"
-                                style={{ color: "#74C3D2" }}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate("/RegistroUsuario");
-                                }}
+                                className="link-teal"
+                                onClick={(e) => { e.preventDefault(); navigate("/RegistroUsuario"); }}
                             >
                                 Regístrese aquí
                             </a>

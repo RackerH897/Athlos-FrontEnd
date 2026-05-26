@@ -8,36 +8,20 @@ const RegistroUsuario = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [aceptoTerminos, setAceptoTerminos] = useState<boolean>(false);
-    
-    // Estados del flujo
+
     const [error, setError] = useState<string>("");
     const [registroExitoso, setRegistroExitoso] = useState<boolean>(false);
     const [mostrarModalTerminos, setMostrarModalTerminos] = useState<boolean>(false);
-    
-    // Estados del simulador de verificación de correo
+
     const [codigoIngresado, setCodigoIngresado] = useState<string>("");
     const [errorVerificacion, setErrorVerificacion] = useState<string>("");
     const simularCodigo = "123456";
 
-    const handleNombreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNombre(e.currentTarget.value);
-    };
-
-    const handleCorreoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCorreo(e.currentTarget.value);
-    };
-
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.currentTarget.value);
-    };
-
-    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setConfirmPassword(e.currentTarget.value);
-    };
-
-    const handleAceptarTerminosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAceptoTerminos(e.currentTarget.checked);
-    };
+    const handleNombreChange = (e: React.ChangeEvent<HTMLInputElement>) => setNombre(e.currentTarget.value);
+    const handleCorreoChange = (e: React.ChangeEvent<HTMLInputElement>) => setCorreo(e.currentTarget.value);
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value);
+    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.currentTarget.value);
+    const handleAceptarTerminosChange = (e: React.ChangeEvent<HTMLInputElement>) => setAceptoTerminos(e.currentTarget.checked);
 
     const handleRegisterSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,18 +31,15 @@ const RegistroUsuario = () => {
             setError("Todos los campos del formulario son obligatorios.");
             return;
         }
-
         if (password !== confirmPassword) {
             setError("Las contraseñas ingresadas no coinciden.");
             return;
         }
-
         if (!aceptoTerminos) {
             setError("Debe aceptar los Términos y la Política de Privacidad para continuar.");
             return;
         }
 
-        // Simular éxito de registro (US02)
         setRegistroExitoso(true);
     };
 
@@ -67,7 +48,6 @@ const RegistroUsuario = () => {
         setErrorVerificacion("");
 
         if (codigoIngresado === simularCodigo) {
-            // Verificación exitosa, redirigir a Mis Datos Personales (US01)
             localStorage.setItem("athlos_usuario", JSON.stringify({ nombre, correo }));
             navigate("/DatosUsuario");
         } else {
@@ -76,41 +56,28 @@ const RegistroUsuario = () => {
     };
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center w-100 py-4">
-            {/* Encabezado principal */}
-            <div className="text-center mb-4">
-                <div
-                    className="rounded-circle d-flex justify-content-center align-items-center mx-auto mb-3"
-                    style={{
-                        width: "64px",
-                        height: "64px",
-                        background: "rgba(116, 195, 210, 0.15)",
-                        border: "1px solid rgba(116, 195, 210, 0.3)"
-                    }}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style={{ width: "30px", fill: "#74C3D2" }}>
+        <div className="page-container">
+            <div className="page-header">
+                <div className="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                         <path d="M96 176C96 149.5 117.5 128 144 128C170.5 128 192 149.5 192 176L192 288L448 288L448 176C448 149.5 469.5 128 496 128C522.5 128 544 149.5 544 176L544 192L560 192C586.5 192 608 213.5 608 240L608 288C625.7 288 640 302.3 640 320C640 337.7 625.7 352 608 352L608 400C608 426.5 586.5 448 560 448L544 448L544 464C544 490.5 522.5 512 496 512C469.5 512 448 490.5 448 464L448 352L192 352L192 464C192 490.5 170.5 512 144 512C117.5 512 96 490.5 96 464L96 448L80 448C53.5 448 32 426.5 32 400L32 352C14.3 352 0 337.7 0 320C0 302.3 14.3 288 32 288L32 240C32 213.5 53.5 192 80 192L96 192L96 176z" />
                     </svg>
                 </div>
-                <h2 className="fw-bold" style={{ color: "#ffffff", letterSpacing: "-0.5px" }}>Crear cuenta</h2>
-                <p style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "0.95rem" }}>
-                    Únase a Athlos para iniciar su planificación inteligente.
-                </p>
+                <h2 className="fw-bold page-title">Crear cuenta</h2>
+                <p className="page-subtitle">Únase a Athlos para iniciar su planificación inteligente.</p>
             </div>
 
             <div className="glass-card">
                 {!registroExitoso ? (
                     <>
-                        <h4 className="fw-bold mb-1 text-start" style={{ color: "#ffffff" }}>Registro</h4>
-                        <p className="text-start mb-4" style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.85rem" }}>
+                        <h4 className="fw-bold mb-1 text-start card-title">Registro</h4>
+                        <p className="text-start mb-4 card-subtitle">
                             Complete la información solicitada para activar su perfil.
                         </p>
 
                         <form onSubmit={handleRegisterSubmit}>
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Nombre Completo
-                                </label>
+                                <label className="form-label fw-semibold text-label">Nombre Completo</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -129,9 +96,7 @@ const RegistroUsuario = () => {
                             </div>
 
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Correo Electrónico
-                                </label>
+                                <label className="form-label fw-semibold text-label">Correo Electrónico</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -150,9 +115,7 @@ const RegistroUsuario = () => {
                             </div>
 
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Contraseña
-                                </label>
+                                <label className="form-label fw-semibold text-label">Contraseña</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -171,9 +134,7 @@ const RegistroUsuario = () => {
                             </div>
 
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Confirmar Contraseña
-                                </label>
+                                <label className="form-label fw-semibold text-label">Confirmar Contraseña</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -191,7 +152,6 @@ const RegistroUsuario = () => {
                                 </div>
                             </div>
 
-                            {/* Checkbox de Términos y Condiciones (Requerido US02) */}
                             <div className="form-check text-start mb-4 mt-3">
                                 <input
                                     className="form-check-input"
@@ -204,20 +164,12 @@ const RegistroUsuario = () => {
                                         borderColor: "rgba(255,255,255,0.25)"
                                     }}
                                 />
-                                <label
-                                    className="form-check-label text-muted"
-                                    htmlFor="terminosCheckbox"
-                                    style={{ fontSize: "0.8rem", userSelect: "none" }}
-                                >
+                                <label className="form-check-label text-muted" htmlFor="terminosCheckbox" style={{ fontSize: "0.8rem", userSelect: "none" }}>
                                     Acepto los{" "}
                                     <a
                                         href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            setMostrarModalTerminos(true);
-                                        }}
-                                        className="fw-semibold text-decoration-none"
-                                        style={{ color: "#74C3D2" }}
+                                        className="link-teal"
+                                        onClick={(e) => { e.preventDefault(); setMostrarModalTerminos(true); }}
                                     >
                                         Términos y la Política de Privacidad
                                     </a>
@@ -225,18 +177,7 @@ const RegistroUsuario = () => {
                             </div>
 
                             {error && (
-                                <div
-                                    className="p-3 mb-3 rounded text-start"
-                                    style={{
-                                        background: "rgba(220, 53, 69, 0.15)",
-                                        border: "1px solid rgba(220, 53, 69, 0.3)",
-                                        color: "#ff8080",
-                                        fontSize: "0.8rem",
-                                        lineHeight: "1.4"
-                                    }}
-                                >
-                                    {error}
-                                </div>
+                                <div className="alert-glass-error mb-3 text-start">{error}</div>
                             )}
 
                             <div className="d-grid mb-3 mt-4">
@@ -246,16 +187,12 @@ const RegistroUsuario = () => {
                             </div>
 
                             <div className="text-center mt-3">
-                                <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" }}>
+                                <p className="mb-0 text-muted-glass">
                                     ¿Ya tiene una cuenta?{" "}
                                     <a
                                         href="#"
-                                        className="fw-semibold text-decoration-none"
-                                        style={{ color: "#74C3D2" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            navigate("/");
-                                        }}
+                                        className="link-teal"
+                                        onClick={(e) => { e.preventDefault(); navigate("/"); }}
                                     >
                                         Inicie sesión
                                     </a>
@@ -264,36 +201,19 @@ const RegistroUsuario = () => {
                         </form>
                     </>
                 ) : (
-                    // Estado de éxito / Verificación simulada de correo (US02)
                     <div className="text-start">
-                        <div
-                            className="rounded-circle d-flex justify-content-center align-items-center mb-3"
-                            style={{
-                                width: "48px",
-                                height: "48px",
-                                background: "rgba(40, 167, 69, 0.15)",
-                                border: "1px solid rgba(40, 167, 69, 0.3)"
-                            }}
-                        >
+                        <div className="success-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#28A745" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </svg>
                         </div>
-                        <h4 className="fw-bold mb-2" style={{ color: "#ffffff" }}>Cuenta creada</h4>
+                        <h4 className="fw-bold mb-2 card-title">Cuenta creada</h4>
                         <p style={{ color: "rgba(255, 255, 255, 0.75)", fontSize: "0.88rem", lineHeight: "1.5" }}>
                             Cuenta creada. Revisa tu correo para verificarla.
                         </p>
 
-                        <div
-                            className="p-3 my-3 rounded"
-                            style={{
-                                background: "rgba(116, 195, 210, 0.08)",
-                                border: "1px solid rgba(116, 195, 210, 0.25)"
-                            }}
-                        >
-                            <small className="d-block fw-semibold mb-1" style={{ color: "#74C3D2" }}>
-                                [Simulador de Correo Electrónico]
-                            </small>
+                        <div className="alert-glass-info my-3">
+                            <small className="d-block fw-semibold mb-1 text-teal">[Simulador de Correo Electrónico]</small>
                             <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem" }}>
                                 Hemos simulado el envío de un código de verificación a su bandeja:
                             </span>
@@ -304,7 +224,7 @@ const RegistroUsuario = () => {
 
                         <form onSubmit={handleVerifySubmit} className="mt-4">
                             <div className="mb-3">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
+                                <label className="form-label fw-semibold text-label">
                                     Ingrese el código recibido
                                 </label>
                                 <input
@@ -320,17 +240,7 @@ const RegistroUsuario = () => {
                             </div>
 
                             {errorVerificacion && (
-                                <div
-                                    className="p-3 mb-3 rounded"
-                                    style={{
-                                        background: "rgba(220, 53, 69, 0.15)",
-                                        border: "1px solid rgba(220, 53, 69, 0.3)",
-                                        color: "#ff8080",
-                                        fontSize: "0.8rem"
-                                    }}
-                                >
-                                    {errorVerificacion}
-                                </div>
+                                <div className="alert-glass-error mb-3">{errorVerificacion}</div>
                             )}
 
                             <div className="d-grid mb-2">
@@ -343,27 +253,14 @@ const RegistroUsuario = () => {
                 )}
             </div>
 
-            {/* Modal de Términos y Condiciones con Glassmorphism */}
+            {/* Modal de Términos y Condiciones */}
             {mostrarModalTerminos && (
-                <div
-                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center px-3"
-                    style={{
-                        background: "rgba(5, 7, 10, 0.75)",
-                        backdropFilter: "blur(8px)",
-                        WebkitBackdropFilter: "blur(8px)",
-                        zIndex: 1050
-                    }}
-                >
+                <div className="modal-overlay">
                     <div
                         className="glass-card text-start overflow-hidden d-flex flex-column"
-                        style={{
-                            maxWidth: "400px",
-                            maxHeight: "80vh",
-                            boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
-                            border: "1px solid rgba(255,255,255,0.12)"
-                        }}
+                        style={{ maxWidth: "400px", maxHeight: "80vh", boxShadow: "0 25px 50px rgba(0,0,0,0.6)" }}
                     >
-                        <h4 className="fw-bold mb-3 pb-2" style={{ color: "#ffffff", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                        <h4 className="fw-bold mb-3 pb-2 card-title divider-bottom">
                             Términos y Condiciones
                         </h4>
 
@@ -372,30 +269,24 @@ const RegistroUsuario = () => {
                             <p>
                                 Athlos es un asistente de entrenamiento impulsado por algoritmos de Inteligencia Artificial. Los planes físicos y recomendaciones alimenticias sugeridos se generan a partir de la información física proporcionada por el usuario (peso, talla, complexión).
                             </p>
-
                             <p className="fw-bold text-white">2. Responsabilidad Física</p>
                             <p>
                                 El usuario asume toda responsabilidad sobre la realización de las actividades físicas sugeridas. Athlos no sustituye la supervisión médica ni la asesoría presencial de un profesional certificado de salud física. Si experimenta dolor o molestias, detenga la actividad de inmediato.
                             </p>
-
                             <p className="fw-bold text-white">3. Tratamiento de Datos Personales</p>
                             <p>
                                 De acuerdo con los estándares de privacidad, sus medidas corporales e información de perfil se tratarán de forma estrictamente confidencial y se utilizarán de manera automatizada única y exclusivamente para recalcular y optimizar su Índice de Masa Corporal (IMC) y diseñar su plan de entrenamiento individualizado.
                             </p>
-
                             <p className="fw-bold text-white">4. Aceptación del Servicio</p>
                             <p>
                                 Al marcar la casilla de aceptación, usted declara estar en óptimas condiciones de salud para emprender entrenamientos físicos y liberar a la aplicación Athlos de toda reclamación por lesiones corporales derivadas del uso autónomo de los catálogos proporcionados.
                             </p>
                         </div>
 
-                        <div className="d-grid mt-4 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                        <div className="d-grid mt-4 pt-2 divider-top">
                             <button
                                 className="btn glass-btn-primary py-2"
-                                onClick={() => {
-                                    setAceptoTerminos(true);
-                                    setMostrarModalTerminos(false);
-                                }}
+                                onClick={() => { setAceptoTerminos(true); setMostrarModalTerminos(false); }}
                             >
                                 Aceptar y Cerrar
                             </button>

@@ -13,7 +13,6 @@ const DatosUsuario = () => {
     const [complexion, setComplexion] = useState<Complexion>("mesomorfo");
     const [objetivo, setObjetivo] = useState<Objetivo>("bajar_peso");
     const [error, setError] = useState<string>("");
-    //simulacion
     const [guardadoExitoso, setGuardadoExitoso] = useState<boolean>(false);
     const [idDatosGenerado, setIdDatosGenerado] = useState<string>("");
 
@@ -21,11 +20,10 @@ const DatosUsuario = () => {
     const handleTallaChange = (e: React.ChangeEvent<HTMLInputElement>) => setTalla(e.currentTarget.value);
     const handleEdadChange = (e: React.ChangeEvent<HTMLInputElement>) => setEdad(e.currentTarget.value);
 
-    // Cálculo dinámico de IMC en tiempo real
     const pesoNum = Number(peso);
     const tallaM = Number(talla) / 100;
     const imc = pesoNum > 0 && tallaM > 0 ? pesoNum / (tallaM * tallaM) : null;
-    
+
     const imcTexto =
         imc === null ? "" :
         imc < 18.5 ? "Bajo peso" :
@@ -40,26 +38,21 @@ const DatosUsuario = () => {
             setError("Por favor, complete todos los campos obligatorios.");
             return;
         }
-
-        // Validaciones de rangos de base de datos
         if (pesoNum < 20 || pesoNum > 400) {
             setError("El peso debe estar entre 20 y 400 kg.");
             return;
         }
-        
         const tallaNum = Number(talla);
         if (tallaNum < 80 || tallaNum > 260) {
             setError("La talla debe estar entre 80 y 260 cm.");
             return;
         }
-        
         const edadNum = Number(edad);
         if (edadNum < 10 || edadNum > 120) {
             setError("La edad debe estar entre 10 y 120 años.");
             return;
         }
 
-        // Generar identificador dinámico de datos físicos (ID_DATOS)
         const idGenerado = `DATOS-${Math.floor(1000 + Math.random() * 9000)}`;
         setIdDatosGenerado(idGenerado);
         localStorage.setItem("athlos_datos", JSON.stringify({ peso, talla, edad, complexion, objetivo }));
@@ -67,42 +60,29 @@ const DatosUsuario = () => {
     };
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center w-100 py-4">
-            {/* Encabezado principal */}
-            <div className="text-center mb-4">
-                <div
-                    className="rounded-circle d-flex justify-content-center align-items-center mx-auto mb-3"
-                    style={{
-                        width: "64px",
-                        height: "64px",
-                        background: "rgba(116, 195, 210, 0.15)",
-                        border: "1px solid rgba(116, 195, 210, 0.3)"
-                    }}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style={{ width: "30px", fill: "#74C3D2" }}>
+        <div className="page-container">
+            <div className="page-header">
+                <div className="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                         <path d="M96 176C96 149.5 117.5 128 144 128C170.5 128 192 149.5 192 176L192 288L448 288L448 176C448 149.5 469.5 128 496 128C522.5 128 544 149.5 544 176L544 192L560 192C586.5 192 608 213.5 608 240L608 288C625.7 288 640 302.3 640 320C640 337.7 625.7 352 608 352L608 400C608 426.5 586.5 448 560 448L544 448L544 464C544 490.5 522.5 512 496 512C469.5 512 448 490.5 448 464L448 352L192 352L192 464C192 490.5 170.5 512 144 512C117.5 512 96 490.5 96 464L96 448L80 448C53.5 448 32 426.5 32 400L32 352C14.3 352 0 337.7 0 320C0 302.3 14.3 288 32 288L32 240C32 213.5 53.5 192 80 192L96 192L96 176z" />
                     </svg>
                 </div>
-                <h2 className="fw-bold" style={{ color: "#ffffff", letterSpacing: "-0.5px" }}>Mis Datos Personales</h2>
-                <p style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "0.95rem" }}>
-                    Sus medidas físicas definen su perfil corporal en la plataforma.
-                </p>
+                <h2 className="fw-bold page-title">Mis Datos Personales</h2>
+                <p className="page-subtitle">Sus medidas físicas definen su perfil corporal en la plataforma.</p>
             </div>
 
             <div className="glass-card">
                 {!guardadoExitoso ? (
                     <>
-                        <h4 className="fw-bold mb-1 text-start" style={{ color: "#ffffff" }}>Perfil Corporal</h4>
-                        <p className="text-start mb-4" style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.85rem" }}>
+                        <h4 className="fw-bold mb-1 text-start card-title">Perfil Corporal</h4>
+                        <p className="text-start mb-4 card-subtitle">
                             Ingrese sus mediciones obligatorias para calibrar los algoritmos de entrenamiento.
                         </p>
 
                         <form onSubmit={handleSubmit}>
                             {/* Peso */}
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Peso (kg)
-                                </label>
+                                <label className="form-label fw-semibold text-label">Peso (kg)</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -110,75 +90,41 @@ const DatosUsuario = () => {
                                             <path d="M8 4a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 4m1.024 2.633L9.4 5.7a.2.2 0 0 0-.36-.173l-.473.879A2 2 0 0 0 8 6a2 2 0 1 0 1.024.633" />
                                         </svg>
                                     </span>
-                                    <input
-                                        className="form-control glass-input"
-                                        type="number"
-                                        step="0.1"
-                                        placeholder="Ej. 72.5"
-                                        value={peso}
-                                        onChange={handlePesoChange}
-                                        required
-                                    />
+                                    <input className="form-control glass-input" type="number" step="0.1" placeholder="Ej. 72.5" value={peso} onChange={handlePesoChange} required />
                                 </div>
                             </div>
 
                             {/* Talla */}
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Talla (cm)
-                                </label>
+                                <label className="form-label fw-semibold text-label">Talla (cm)</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                             <path d="M8 0a.5.5 0 0 1 .354.146l3 3a.5.5 0 0 1-.708.708L8.5 1.707v12.586l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 14.293V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3A.5.5 0 0 1 8 0" />
                                         </svg>
                                     </span>
-                                    <input
-                                        className="form-control glass-input"
-                                        type="number"
-                                        placeholder="Ej. 175"
-                                        value={talla}
-                                        onChange={handleTallaChange}
-                                        required
-                                    />
+                                    <input className="form-control glass-input" type="number" placeholder="Ej. 175" value={talla} onChange={handleTallaChange} required />
                                 </div>
                             </div>
 
                             {/* Edad */}
                             <div className="mb-3 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Edad (años)
-                                </label>
+                                <label className="form-label fw-semibold text-label">Edad (años)</label>
                                 <div className="input-group">
                                     <span className="input-group-text glass-input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
                                         </svg>
                                     </span>
-                                    <input
-                                        className="form-control glass-input"
-                                        type="number"
-                                        placeholder="Ej. 26"
-                                        value={edad}
-                                        onChange={handleEdadChange}
-                                        required
-                                    />
+                                    <input className="form-control glass-input" type="number" placeholder="Ej. 26" value={edad} onChange={handleEdadChange} required />
                                 </div>
                             </div>
 
-                            {/* IMC Estimado en Vivo */}
+                            {/* IMC en vivo */}
                             {imc !== null && (
-                                <div
-                                    className="d-flex justify-content-between align-items-center my-4 p-3 rounded"
-                                    style={{
-                                        background: "rgba(116, 195, 210, 0.08)",
-                                        border: "1px solid rgba(116, 195, 210, 0.2)"
-                                    }}
-                                >
-                                    <span className="fw-semibold" style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "0.85rem" }}>
-                                        IMC Estimado
-                                    </span>
-                                    <span className="fw-bold" style={{ color: "#74C3D2", fontSize: "0.9rem" }}>
+                                <div className="imc-box d-flex justify-content-between align-items-center my-4">
+                                    <span className="fw-semibold text-label-sm">IMC Estimado</span>
+                                    <span className="fw-bold text-teal" style={{ fontSize: "0.9rem" }}>
                                         {imc.toFixed(1)} · {imcTexto}
                                     </span>
                                 </div>
@@ -186,25 +132,14 @@ const DatosUsuario = () => {
 
                             {/* Complexión */}
                             <div className="mb-4 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Complexión
-                                </label>
+                                <label className="form-label fw-semibold text-label">Complexión</label>
                                 <div className="d-flex gap-2">
                                     {(["ectomorfo", "mesomorfo", "endomorfo"] as Complexion[]).map((val) => (
                                         <button
                                             key={val}
                                             type="button"
                                             onClick={() => setComplexion(val)}
-                                            className="btn flex-fill py-2 text-capitalize"
-                                            style={{
-                                                background: complexion === val ? "linear-gradient(135deg, #74c3d2 0%, #4a90e2 100%)" : "rgba(255, 255, 255, 0.04)",
-                                                color: complexion === val ? "#0b1521" : "rgba(255, 255, 255, 0.6)",
-                                                border: complexion === val ? "none" : "1px solid rgba(255, 255, 255, 0.1)",
-                                                borderRadius: "8px",
-                                                fontWeight: complexion === val ? "600" : "normal",
-                                                fontSize: "0.82rem",
-                                                transition: "all 0.2s ease"
-                                            }}
+                                            className={`btn flex-fill py-2 text-capitalize btn-option${complexion === val ? " active" : ""}`}
                                         >
                                             {val}
                                         </button>
@@ -214,9 +149,7 @@ const DatosUsuario = () => {
 
                             {/* Objetivo */}
                             <div className="mb-4 text-start">
-                                <label className="form-label fw-semibold" style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "0.85rem" }}>
-                                    Objetivo Personal
-                                </label>
+                                <label className="form-label fw-semibold text-label">Objetivo Personal</label>
                                 <div className="d-flex flex-column gap-2">
                                     {([
                                         ["bajar_peso", "Reducción de peso"],
@@ -227,16 +160,8 @@ const DatosUsuario = () => {
                                             key={val}
                                             type="button"
                                             onClick={() => setObjetivo(val)}
-                                            className="btn text-start py-2 px-3"
-                                            style={{
-                                                background: objetivo === val ? "linear-gradient(135deg, #74c3d2 0%, #4a90e2 100%)" : "rgba(255, 255, 255, 0.04)",
-                                                color: objetivo === val ? "#0b1521" : "rgba(255, 255, 255, 0.6)",
-                                                border: objetivo === val ? "none" : "1px solid rgba(255, 255, 255, 0.1)",
-                                                borderRadius: "8px",
-                                                fontWeight: objetivo === val ? "600" : "normal",
-                                                fontSize: "0.85rem",
-                                                transition: "all 0.2s ease"
-                                            }}
+                                            className={`btn text-start py-2 px-3 btn-option${objetivo === val ? " active" : ""}`}
+                                            style={{ fontSize: "0.85rem" }}
                                         >
                                             {label}
                                         </button>
@@ -245,54 +170,27 @@ const DatosUsuario = () => {
                             </div>
 
                             {error && (
-                                <div
-                                    className="p-3 mb-3 rounded text-start"
-                                    style={{
-                                        background: "rgba(220, 53, 69, 0.15)",
-                                        border: "1px solid rgba(220, 53, 69, 0.3)",
-                                        color: "#ff8080",
-                                        fontSize: "0.8rem"
-                                    }}
-                                >
-                                    {error}
-                                </div>
+                                <div className="alert-glass-error mb-3 text-start">{error}</div>
                             )}
 
                             <div className="d-grid mt-4">
-                                <button className="btn glass-btn-accent py-2" type="submit">
-                                    Guardar
-                                </button>
+                                <button className="btn glass-btn-accent py-2" type="submit">Guardar</button>
                             </div>
                         </form>
                     </>
                 ) : (
-                    // Estado de éxito al Guardar (US01)
                     <div className="text-start">
-                        <div
-                            className="rounded-circle d-flex justify-content-center align-items-center mb-3"
-                            style={{
-                                width: "48px",
-                                height: "48px",
-                                background: "rgba(40, 167, 69, 0.15)",
-                                border: "1px solid rgba(40, 167, 69, 0.3)"
-                            }}
-                        >
+                        <div className="success-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#28A745" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </svg>
                         </div>
-                        <h4 className="fw-bold mb-2" style={{ color: "#ffffff" }}>Mediciones registradas</h4>
+                        <h4 className="fw-bold mb-2 card-title">Mediciones registradas</h4>
                         <p style={{ color: "rgba(255, 255, 255, 0.75)", fontSize: "0.88rem", lineHeight: "1.5" }}>
                             Datos guardados correctamente.
                         </p>
 
-                        <div
-                            className="p-3 my-3 rounded"
-                            style={{
-                                background: "rgba(116, 195, 210, 0.08)",
-                                border: "1px solid rgba(116, 195, 210, 0.25)"
-                            }}
-                        >
+                        <div className="alert-glass-info my-3">
                             <span className="d-block text-muted" style={{ fontSize: "0.78rem" }}>
                                 Identificador único asignado:
                             </span>
@@ -301,10 +199,7 @@ const DatosUsuario = () => {
                             </div>
                         </div>
 
-                        <div
-                            className="p-3 my-3 rounded bg-black bg-opacity-20 text-start"
-                            style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.05)" }}
-                        >
+                        <div className="data-display my-3" style={{ fontSize: "0.8rem" }}>
                             <div className="fw-semibold text-white mb-2">Resumen registrado:</div>
                             <div>• Peso corporal: {peso} kg</div>
                             <div>• Talla corporal: {talla} cm</div>
@@ -314,10 +209,7 @@ const DatosUsuario = () => {
                         </div>
 
                         <div className="d-grid mt-4">
-                            <button
-                                className="btn glass-btn-primary py-2"
-                                onClick={() => navigate("/Entorno")}
-                            >
+                            <button className="btn glass-btn-primary py-2" onClick={() => navigate("/Entorno")}>
                                 Continuar al Entorno
                             </button>
                         </div>
