@@ -9,11 +9,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import LogIn from "./pages/inicio-sesion";
 import RegistroUsuario from "./pages/Registro-Usuario";
-import DatosUsuario from "./pages/Datos-Usuario"; 
+import DatosUsuario from "./pages/Datos-Usuario";
 import EntornoEntrenamiento from "./pages/Entorno-Entrenamiento";
 import RecuperarContrasena from "./pages/recuperar-contrasena";
 import PerfilUsuario from "./pages/Perfil";
 import Menu from "./pages/Menu";
+import Chat from "./pages/Chat";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -33,7 +34,8 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/Entorno" element={<EntornoEntrenamiento />} />
         <Route path="/nueva-contraseña" element={<RecuperarContrasena />} />
         <Route path="/Perfil" element={<PerfilUsuario />} />
-            <Route path="/Menu" element={<Menu />} />
+        <Route path="/Menu" element={<Menu />} />
+        <Route path="/Chat" element={<Chat />} />
       </Routes>
     </Router>
   </StrictMode>
