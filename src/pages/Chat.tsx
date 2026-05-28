@@ -36,7 +36,10 @@ const Chat: React.FC = () => {
     const [mensajes, setMensajes] = useState<Mensaje[]>([]);
     const [inputMsg, setInputMsg] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notifExiting, setNotifExiting] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const notifTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const mostrarObjetivo: Record<string, string> = {
         bajar_peso: "Bajar Peso",
@@ -51,6 +54,11 @@ const Chat: React.FC = () => {
     };
 
     useEffect(() => {
+        // Solicitar permiso de notificaciones del navegador
+        if ("Notification" in window && Notification.permission === "default") {
+            Notification.requestPermission();
+        }
+
         const usuario = JSON.parse(localStorage.getItem("athlos_usuario") || "{}");
         const datos = JSON.parse(localStorage.getItem("athlos_datos") || "{}");
         const entorno = JSON.parse(localStorage.getItem("athlos_entorno") || "{}");
@@ -82,6 +90,10 @@ const Chat: React.FC = () => {
         } else {
             inicializarMensajeBienvenida(physicalData.nombre || "Usuario");
         }
+
+        return () => {
+            if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
+        };
     }, []);
 
     useEffect(() => {
@@ -218,6 +230,17 @@ REGLAS OBLIGATORIAS:
                 text: responseText,
                 timestamp: new Date(),
             }]);
+
+            // Detectar si la respuesta contiene un plan de entrenamiento
+            const lowerResp = responseText.toLowerCase();
+            const esRutina = (
+                (lowerResp.includes("rutina") || lowerResp.includes("plan") || lowerResp.includes("entrenamiento") || lowerResp.includes("ejercicio")) &&
+                (lowerResp.includes("series") || lowerResp.includes("repeticiones") || lowerResp.includes("- ") || lowerResp.includes("* "))
+            );
+
+            if (esRutina) {
+                scheduleTrainingNotification();
+            }
         } catch (err) {
             console.error("Error al conectar con Gemini API:", err);
             setMensajes((prev) => [...prev, {
@@ -229,6 +252,39 @@ REGLAS OBLIGATORIAS:
         } finally {
             setLoading(false);
         }
+    };
+
+    const scheduleTrainingNotification = () => {
+        // Limpiar timer previo si existe
+        if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
+
+        notifTimerRef.current = setTimeout(() => {
+            // Notificación nativa del navegador (funciona en background)
+            if ("Notification" in window && Notification.permission === "granted") {
+                new Notification("🏋️ Athlos - Entrenamiento Pendiente", {
+                    body: "¡Tu plan de entrenamiento está listo! No olvides completar tu rutina de hoy. 💪",
+                    icon: "/favicon.svg",
+                    tag: "athlos-training",
+                });
+            }
+
+            // Notificación in-app (siempre visible)
+            setShowNotification(true);
+            setNotifExiting(false);
+
+            // Auto-ocultar después de 5 segundos
+            setTimeout(() => {
+                dismissNotification();
+            }, 5000);
+        }, 10000); // 10 segundos después de la respuesta
+    };
+
+    const dismissNotification = () => {
+        setNotifExiting(true);
+        setTimeout(() => {
+            setShowNotification(false);
+            setNotifExiting(false);
+        }, 400); // duración de la animación de salida
     };
 
     const handleLimpiarChat = () => {
@@ -284,6 +340,31 @@ REGLAS OBLIGATORIAS:
 
     return (
         <div className="page-container" style={{ paddingTop: "0.75rem", paddingBottom: "0.75rem" }}>
+            {/* PUSH NOTIFICATION TOAST */}
+            {showNotification && (
+                <div className="push-notification-overlay">
+                    <div
+                        className={`push-notification ${notifExiting ? "notif-exit" : ""}`}
+                        onClick={dismissNotification}
+                    >
+                        <div className="push-notification-header">
+                            <div className="push-notification-icon">🏋️</div>
+                            <div>
+                                <div className="push-notification-app">Athlos</div>
+                            </div>
+                            <div className="push-notification-time">ahora</div>
+                        </div>
+                        <div className="push-notification-title">
+                            ¡Entrenamiento Pendiente!
+                        </div>
+                        <div className="push-notification-body">
+                            Tu plan de entrenamiento está listo. ¡Es hora de ponerte en acción! 💪🔥
+                        </div>
+                        <div className="push-notification-progress"></div>
+                    </div>
+                </div>
+            )}
+
             <div className="glass-card chat-container d-flex flex-column">
                 {/* CABECERA */}
                 <div className="d-flex justify-content-between align-items-center mb-2 pb-2 divider-bottom">
