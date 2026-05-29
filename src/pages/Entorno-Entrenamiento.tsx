@@ -24,10 +24,11 @@ const ENTORNOS: { value: Ambiente; label: string; icono: string }[] = [
 const EntornoEntrenamiento = () => {
     const navigate = useNavigate();
     const [entorno, setEntorno] = useState<Ambiente>("casa");
+    const [mostrarModalBienvenida, setMostrarModalBienvenida] = useState<boolean>(false);
 
     const handleContinuar = () => {
         localStorage.setItem("athlos_entorno", JSON.stringify({ ambiente: entorno }));
-        navigate("/Perfil");
+        setMostrarModalBienvenida(true);
     };
 
     return (
@@ -69,6 +70,33 @@ const EntornoEntrenamiento = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Modal de Bienvenida */}
+            {mostrarModalBienvenida && (
+                <div className="modal-overlay">
+                    <div className="glass-card text-center d-flex flex-column justify-content-center align-items-center welcome-modal-card">
+                        <div className="success-icon mb-3 welcome-modal-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#74C3D2" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                            </svg>
+                        </div>
+                        <h4 className="fw-bold mb-2 card-title text-white">¡Bienvenido a Athlos!</h4>
+                        <p className="mb-4" style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.95rem" }}>
+                            Tu camino empieza aquí.
+                        </p>
+                        
+                        <div className="d-grid w-100">
+                            <button
+                                className="btn glass-btn-primary py-2 fw-bold"
+                                onClick={() => navigate("/Menu")}
+                            >
+                                ¡Vamos!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

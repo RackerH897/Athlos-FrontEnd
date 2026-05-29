@@ -292,8 +292,19 @@ const PerfilUsuario = () => {
             <button className="btn glass-btn-accent py-2" onClick={handleGuardar}>Guardar cambios</button>
           </div>
         ) : (
-          <div className="d-grid mt-2">
+          <div className="d-grid mt-2 gap-2">
             <button className="btn glass-btn-primary py-2" onClick={() => navigate("/Menu")}>Volver</button>
+            <button 
+              className="btn py-2 text-white" 
+              style={{ backgroundColor: "rgba(255, 50, 50, 0.2)", border: "1px solid rgba(255, 50, 50, 0.4)", borderRadius: "12px", transition: "all 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255, 50, 50, 0.4)")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(255, 50, 50, 0.2)")}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Cerrar Sesión
+            </button>
           </div>
         )}
       </div>

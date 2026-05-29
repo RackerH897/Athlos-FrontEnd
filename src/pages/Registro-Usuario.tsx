@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const RegistroUsuario = () => {
     const navigate = useNavigate();
@@ -8,6 +9,7 @@ const RegistroUsuario = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [aceptoTerminos, setAceptoTerminos] = useState<boolean>(false);
+    const [captchaValidado, setCaptchaValidado] = useState<boolean>(false);
 
     const [error, setError] = useState<string>("");
     const [registroExitoso, setRegistroExitoso] = useState<boolean>(false);
@@ -33,6 +35,10 @@ const RegistroUsuario = () => {
         }
         if (password !== confirmPassword) {
             setError("Las contraseñas ingresadas no coinciden.");
+            return;
+        }
+        if (!captchaValidado) {
+            setError("Por favor, verifique que no es un robot completando el CAPTCHA.");
             return;
         }
         if (!aceptoTerminos) {
@@ -150,6 +156,21 @@ const RegistroUsuario = () => {
                                         required
                                     />
                                 </div>
+                            </div>
+
+                            <div className="mb-3 mt-4 d-flex justify-content-center">
+                                {/* 
+                                  NOTA PARA PRODUCCIÓN:
+                                  Actualmente se utiliza una clave de prueba de Google para evitar bloqueos en el desarrollo local.
+                                  Por esto aparece un texto rojo indicando que es de "testing".
+                                  En productivo, se DEBE crear un proyecto en Google reCAPTCHA (v2), obtener una "Site Key" real
+                                  y reemplazar el valor de "sitekey" de abajo (preferiblemente usando variables de entorno como .env).
+                                */}
+                                <ReCAPTCHA
+                                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                    onChange={(val) => setCaptchaValidado(!!val)}
+                                    theme="dark"
+                                />
                             </div>
 
                             <div className="form-check text-start mb-4 mt-3">
