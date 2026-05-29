@@ -215,6 +215,20 @@ body {
   width: 100%;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  animation: pageFadeInUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .page-header {
